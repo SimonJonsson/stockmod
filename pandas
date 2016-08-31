@@ -1,0 +1,26 @@
+from pandas.io.data import DataReader
+from pandas.io.data import DataFrame
+from datetime import datetime, timedelta
+import urllib
+
+list_with_stocks = ('nyse:ibm','azn.st','volv-b.st', 'azn.st', 'elux-b.st')
+
+list_with_fundamenta = []
+year = int(datetime.now().strftime('%Y'))
+month = int(datetime.now().strftime('%m'))
+day = int(datetime.now().strftime('%d'))
+
+for stock in list_with_stocks:
+    data = DataReader('azn.st',  'yahoo', '2015/10/1', '2015/11/1')
+    lista = (data['Close'])
+    z = list(data.index)
+    lista3 = []
+    i = 0
+    for stock in lista:
+        lista2 = []
+        lista2.append(z[i])
+        lista2.append(stock)
+        lista3.append(lista2)
+        i+=1
+    list_with_fundamenta.append(lista3)
+    print(list_with_fundamenta)     data = DataReader(stock,  'yahoo', datetime(year,9,day), datetime(year,month,day))
