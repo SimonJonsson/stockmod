@@ -6,7 +6,7 @@ Första gången
 0) Öppna terminal i mapp du vill ha projektet i
 1) git config --global user.name "SimonJonsson"
 2) git config --global user.email "simonjonsson3@hotmail.com"
-3) git clone https://gralo184@github.com/SimonJonsson/stockmod
+3) git clone https://*user*@github.com/SimonJonsson/stockmod *user* = ditt användarnamn
 4) cd stockmod
 
 ----
