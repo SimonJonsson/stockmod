@@ -1,6 +1,7 @@
 try:
     import urllib.request as urllib2
-    import sqlite3
+    import os
+    import sys
     import datetime
     import math
     import pymysql
@@ -15,7 +16,9 @@ corpList = [] # Should be kept global so we don't get alot of calls, saves memor
 # Adds each html in htmls.txt as a corporation
 for line in file:
     corpList.append(line)
-
+passwd = input("Password: ")
+os.system('clear')
+print("\rStockmod")
 file.close()
 
 def fetchData(corp):
@@ -41,7 +44,7 @@ def fetchData(corp):
 
 # Stores stock price, name and timestamp in db
 def storeData(data): # Fix SQL shit l8r
-    db = pymysql.connect(host='95.80.53.172',port=3306,user='Schill', passwd='Stockmod', db='stockmod')
+    db = pymysql.connect(host='95.80.53.172',port=3306,user='Schill', passwd=passwd, db='stockmod')
     cursor = db.cursor()
     for x in data:
         sql = "INSERT INTO " + x[0] + " (time,value) VALUES (CURRENT_TIMESTAMP()," + x[2] +")"
@@ -60,8 +63,9 @@ def planner():
         mydate = datetime.datetime.today()
         now = datetime.time(mydate.hour,mydate.minute,mydate.second)
         temp = []
-        
         if (mydate.weekday() != 5 and mydate.weekday() != 6 and start < now and now < end): # If market is open
+            print("Open\r",end="")
+            sys.stdout.flush()
             for corp in corpList:
                 data = fetchData(corp)
                 temp.append(data)
@@ -70,6 +74,8 @@ def planner():
             del temp # Release memory, prevent leakage
         else:
             while not (start < now and now < end): # Lowers CPU usage at closed hours
+                print("Closed\r",end="")
+                sys.stdout.flush() # So carriage return \r gets printed (endl flushes)
                 sleep(30)
                 mydate = datetime.datetime.today()
                 now = datetime.time(mydate.hour,mydate.minute,mydate.second)
