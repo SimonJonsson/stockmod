@@ -31,6 +31,7 @@ def fetchData(corp):
     value = soup.find('span', {'class':'pushBox'}).text
     value = value.strip()
     value = value.replace("\xa0", "") # Avanza uses \xa0 as space, therefore the replace
+    value = value.replace(",",".")
     time = '{:%Y-%m-%d,%H:%M:%S}'.format(datetime.datetime.now());
     return [name, value, time]
 
