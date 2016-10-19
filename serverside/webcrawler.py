@@ -48,7 +48,7 @@ def storeData(data): # Fix SQL shit l8r
         #outputFile.write(x[0] + "," + x[1]+ "," + x[2] + "\n")
         #sql = "INSERT INTO " + x[0] + " (time,value) VALUES (" + x[1] + "," + x[2] +")"
         sql = "INSERT INTO " + x[0] + " (time,value) VALUES (CURRENT_TIMESTAMP()," + x[2] +")"
-        print(sql)
+        #print(sql)
         cursor.execute(sql)
         db.commit()
     #outputFile.close()
