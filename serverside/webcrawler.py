@@ -3,6 +3,7 @@ try:
     import sqlite3
     import datetime
     import math
+    import pymysql
     from time import sleep
     from bs4 import BeautifulSoup as BS
 except ImportError:
@@ -27,21 +28,31 @@ def fetchData(corp):
     soup = BS(html,'lxml')
 
     name = soup.find('div', {'class':'displayName'}).text
-    name = name.strip()
+    name = name.replace("\r\n\t\t\t","")
+    name = name.replace(" ","")
+    name = name.replace(".","")
+    name = name.replace("&","")
     value = soup.find('span', {'class':'pushBox'}).text
     value = value.strip()
     value = value.replace("\xa0", "") # Avanza uses \xa0 as space, therefore the replace
     value = value.replace(",",".")
-    time = '{:%Y-%m-%d,%H:%M:%S}'.format(datetime.datetime.now());
-    return [name, value, time]
+    time = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now());
+    return [name, time, value]
 
 # Stores stock price, name and timestamp in db
 def storeData(data): # Fix SQL shit l8r
-    outputFile = open("data.dat",'a')
+    #outputFile = open("data.dat",'a')
+    db = pymysql.connect(host='95.80.53.172',port=3306,user='Schill', passwd='', db='stockmod')
+    cursor = db.cursor()
     for x in data:
-        outputFile.write(x[0] + "," + x[1]+ "," + x[2] + "\n")
-        print(x)
-    outputFile.close()
+        #outputFile.write(x[0] + "," + x[1]+ "," + x[2] + "\n")
+        #sql = "INSERT INTO " + x[0] + " (time,value) VALUES (" + x[1] + "," + x[2] +")"
+        sql = "INSERT INTO " + x[0] + " (time,value) VALUES (CURRENT_TIMESTAMP()," + x[2] +")"
+        print(sql)
+        cursor.execute(sql)
+        db.commit()
+    #outputFile.close()
+    db.close()
     
 # To reinforce that each link is fetched over a period T of time
 def planner():
@@ -54,8 +65,9 @@ def planner():
         for corp in corpList:
             data = fetchData(corp)
             temp.append(data)
-            sleep(cycle)
+            #sleep(cycle)
         storeData(temp)
+        sleep(cycle)
         del temp # Release memory, prevent leakage
 
 def main():
