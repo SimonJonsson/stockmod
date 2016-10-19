@@ -75,7 +75,6 @@ def planner():
             del temp # Release memory, prevent leakage
         else:
             while not (start < now and now < end): # Lowers CPU usage at closed hours
-                print(now)
                 sleep(30)
                 mydate = datetime.datetime.today()
                 now = datetime.time(mydate.hour,mydate.minute,mydate.second)
