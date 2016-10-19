@@ -65,9 +65,8 @@ def planner():
         for corp in corpList:
             data = fetchData(corp)
             temp.append(data)
-            #sleep(cycle)
+            sleep(cycle)
         storeData(temp)
-        sleep(cycle)
         del temp # Release memory, prevent leakage
 
 def main():
