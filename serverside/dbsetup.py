@@ -11,8 +11,11 @@ except ImportError:
     
 
 file = open('../htmls.txt','r')
+passwd = input("Password: ")
+os.system('clear')
+print("\rStockmod setup")
 
-db = pymysql.connect(host='95.80.53.172',port=3306,user='Schill', passwd='', db='stockmod')
+db = pymysql.connect(host='95.80.53.172',port=3306,user='Schill', passwd=passwd, db='stockmod')
 cursor = db.cursor()
 
 corpList = [] # Should be kept global so we don't get alot of calls, saves memory
