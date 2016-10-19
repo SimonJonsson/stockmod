@@ -2,6 +2,7 @@ try:
     import urllib.request as urllib2
     import sqlite3
     import datetime
+    import math
     from time import sleep
     from bs4 import BeautifulSoup as BS
 except ImportError:
@@ -29,6 +30,7 @@ def fetchData(corp):
     name = name.strip()
     value = soup.find('span', {'class':'pushBox'}).text
     value = value.strip()
+    value = value.replace("\xa0", "") # Avanza uses \xa0 as space, therefore the replace
     time = '{:%Y-%m-%d,%H:%M:%S}'.format(datetime.datetime.now());
     return [name, value, time]
 
@@ -43,7 +45,8 @@ def storeData(data): # Fix SQL shit l8r
 # To reinforce that each link is fetched over a period T of time
 def planner():
     length = len(corpList)
-    cycle = 60/length # So we split each download to a cycle, fetches per minute
+    cycle = math.ceil(length/60) + 1 # Round to nearest upper minute
+    cycle = cycle*60/length # So we split each download to a cycle, fetches per minute
 
     while True:
         temp = []
