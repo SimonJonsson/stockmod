@@ -41,17 +41,12 @@ def fetchData(corp):
 
 # Stores stock price, name and timestamp in db
 def storeData(data): # Fix SQL shit l8r
-    #outputFile = open("data.dat",'a')
-    db = pymysql.connect(host='95.80.53.172',port=3306,user='Schill', passwd='', db='stockmod')
+    db = pymysql.connect(host='95.80.53.172',port=3306,user='Schill', passwd='Stockmod', db='stockmod')
     cursor = db.cursor()
     for x in data:
-        #outputFile.write(x[0] + "," + x[1]+ "," + x[2] + "\n")
-        #sql = "INSERT INTO " + x[0] + " (time,value) VALUES (" + x[1] + "," + x[2] +")"
         sql = "INSERT INTO " + x[0] + " (time,value) VALUES (CURRENT_TIMESTAMP()," + x[2] +")"
-        #print(sql)
         cursor.execute(sql)
         db.commit()
-    #outputFile.close()
     db.close()
     
 # To reinforce that each link is fetched over a period T of time
