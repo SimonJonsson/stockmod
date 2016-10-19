@@ -59,15 +59,26 @@ def planner():
     length = len(corpList)
     cycle = math.ceil(length/60) + 1 # Round to nearest upper minute
     cycle = cycle*60/length # So we split each download to a cycle, fetches per minute
-
+    end = datetime.time(17, 30, 00)
+    start = datetime.time(9,00,00)
     while True:
+        mydate = datetime.datetime.today()
+        now = datetime.time(mydate.hour,mydate.minute,mydate.second)
         temp = []
-        for corp in corpList:
-            data = fetchData(corp)
-            temp.append(data)
-            sleep(cycle)
-        storeData(temp)
-        del temp # Release memory, prevent leakage
+        
+        if (mydate.weekday() != 5 and mydate.weekday() != 6 and start < now and now < end): # If market is open
+            for corp in corpList:
+                data = fetchData(corp)
+                temp.append(data)
+                sleep(cycle)
+            storeData(temp)
+            del temp # Release memory, prevent leakage
+        else:
+            while not (start < now and now < end): # Lowers CPU usage at closed hours
+                print(now)
+                sleep(30)
+                mydate = datetime.datetime.today()
+                now = datetime.time(mydate.hour,mydate.minute,mydate.second)
 
 def main():
     planner()
