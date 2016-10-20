@@ -17,7 +17,7 @@ corpList = [] # Should be kept global so we don't get alot of calls, saves memor
 for line in file:
     corpList.append(line)
 passwd = input("Password: ")
-os.system('clear')
+os.system('cls' if os.name == 'nt' else 'clear')
 print("\rStockmod")
 file.close()
 

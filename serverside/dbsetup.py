@@ -3,6 +3,7 @@ try:
     import sqlite3
     import datetime
     import math
+    import os
     import pymysql
     from time import sleep
     from bs4 import BeautifulSoup as BS
@@ -12,7 +13,7 @@ except ImportError:
 
 file = open('../htmls.txt','r')
 passwd = input("Password: ")
-os.system('clear')
+os.system('cls' if os.name == 'nt' else 'clear')
 print("\rStockmod setup")
 
 db = pymysql.connect(host='95.80.53.172',port=3306,user='Schill', passwd=passwd, db='stockmod')
