@@ -64,8 +64,7 @@ def planner():
         now = datetime.time(mydate.hour,mydate.minute,mydate.second)
         temp = []
         if (mydate.weekday() != 5 and mydate.weekday() != 6 and start < now and now < end): # If market is open
-            print("Open\r",end="")
-            sys.stdout.flush()
+            print("Open: " + str(now))
             for corp in corpList:
                 data = fetchData(corp)
                 temp.append(data)
@@ -74,8 +73,7 @@ def planner():
             del temp # Release memory, prevent leakage
         else:
             while not (start < now and now < end): # Lowers CPU usage at closed hours
-                print("Closed\r",end="")
-                sys.stdout.flush() # So carriage return \r gets printed (endl flushes)
+                print("Closed")
                 sleep(30)
                 mydate = datetime.datetime.today()
                 now = datetime.time(mydate.hour,mydate.minute,mydate.second)
