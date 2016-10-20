@@ -16,8 +16,8 @@ corpList = [] # Should be kept global so we don't get alot of calls, saves memor
 # Adds each html in htmls.txt as a corporation
 for line in file:
     corpList.append(line)
-passwd = input("Password: ")
-os.system('cls' if os.name == 'nt' else 'clear')
+#passwd = input("Password: ")
+#os.system('cls' if os.name == 'nt' else 'clear')
 print("\rStockmod")
 file.close()
 
@@ -44,7 +44,7 @@ def fetchData(corp):
 
 # Stores stock price, name and timestamp in db
 def storeData(data): # Fix SQL shit l8r
-    db = pymysql.connect(host='95.80.53.172',port=3306,user='Schill', passwd=passwd, db='stockmod')
+    db = pymysql.connect(host='95.80.53.172',port=3306,user='Schill', passwd='Hemligt123', db='stockmod')
     cursor = db.cursor()
     for x in data:
         sql = "INSERT INTO " + x[0] + " (time,value) VALUES (CURRENT_TIMESTAMP()," + x[2] +")"
