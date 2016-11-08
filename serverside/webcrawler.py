@@ -96,6 +96,7 @@ def storeData(data): # Fix SQL shit l8r
                 conn = False
                 print("No connection to database. Trying to reconnect in 10 seconds.")
                 sleep(10)
+            print(conn)
 
 # To reinforce that each link is fetched over a period T of time
 def planner():
