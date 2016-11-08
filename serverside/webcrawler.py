@@ -45,6 +45,8 @@ def fetchData(corp):
     name = name.replace(" ","")
     name = name.replace(".","")
     name = name.replace("&","")
+    name = name.replace("\xe4","")
+    name = name.replace("\xf6","")
     # value = soup.find('span', {'class':'pushBox'}).text
     buyValue = soup.find('span', {'class':'buyPrice'}).text
     buyValue = buyValue.strip()
