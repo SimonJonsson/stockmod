@@ -50,7 +50,7 @@ def fetchData(corp):
     buyValue = buyValue.strip()
     buyValue = buyValue.replace("\xa0", "")
     buyValue = buyValue.replace(",", "")
-    sellValue = soup.find('span', {'class':'sellPrice SText bold')
+    sellValue = soup.find('span', {'class':'sellPrice SText bold'})
     sellValue = sellValue.strip()
     sellValue = sellValue.replace("\xa0", "")
     sellValue = sellValue.replace(",", "")
