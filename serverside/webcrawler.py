@@ -79,6 +79,7 @@ def storeData(data): # Fix SQL shit l8r
         #sql = "INSERT INTO " + x[0] + " (time,value) VALUES (CURRENT_TIMESTAMP()," + x[2] +")"
         sql = "INSERT INTO " + x[0] + " (time,buy,sell) VALUES (CURRENT_TIMESTAMP()," + x[1] +"," + x[2] +  ")"
         cursor.execute(sql)
+        print(sql)
         db.commit() # Needs try-except-catch
         db.close()
         while (conn == False):
