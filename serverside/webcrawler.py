@@ -66,17 +66,18 @@ def fetchData(corp):
 def storeData(data): # Fix SQL shit l8r
     conn = False
     while (conn == False):
-        #try:
-        db = pymysql.connect(host='localhost',port=3306,user='root', passwd=passwd, db='stockmod')
-        cursor = db.cursor()
-        conn = True
-        #except:
-        #    conn = False
-        #    print("No connection to database. Trying to reconnect in 10 seconds.")
-        #    sleep(10)
+        try:
+            db = pymysql.connect(host='localhost',port=3306,user='root', passwd=passwd, db='stockmod')
+            cursor = db.cursor()
+            conn = True
+        except:
+            conn = False
+            print("No connection to database. Trying to reconnect in 10 seconds.")
+            sleep(10)
             
         
     for x in data:
+        print(x)
         conn = False
         #sql = "INSERT INTO " + x[0] + " (time,value) VALUES (CURRENT_TIMESTAMP()," + x[2] +")"
         sql = "INSERT INTO " + x[0] + " (time,buy,sell) VALUES (CURRENT_TIMESTAMP()," + x[1] +"," + x[2] +  ");"
