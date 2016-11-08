@@ -84,20 +84,7 @@ def storeData(data): # Fix SQL shit l8r
         cursor.execute(sql)
         db.commit() # Needs try-except-catch
         db.close()
-        while (conn == False):
-            try:
-                #sql = "INSERT INTO " + x[0] + " (time,value) VALUES (CURRENT_TIMESTAMP()," + x[2] +")"
-                sql = "INSERT INTO " + x[0] + " (time,buy,sell) VALUES (CURRENT_TIMESTAMP()," + x[1] +"," + x[2] +  ")"
-                cursor.execute(sql)
-                db.commit() # Needs try-except-catch
-                db.close()
-                conn = True
-            except:
-                conn = False
-                print("No connection to database. Trying to reconnect in 10 seconds.")
-                sleep(10)
-            print(conn)
-
+       
 # To reinforce that each link is fetched over a period T of time
 def planner():
     length = len(corpList)
