@@ -47,13 +47,16 @@ def fetchData(corp):
     name = name.replace("&","")
     # value = soup.find('span', {'class':'pushBox'}).text
     buyValue = soup.find('span', {'class':'buyPrice'}).text
+    buyValue = buyValue.strip()
     buyValue = buyValue.replace("\xa0", "")
     buyValue = buyValue.replace(",", ".")
     sellValue = soup.find('span', {'class':'sellPrice'}).text
+    sellValue = sellValue.strip()
     sellValue = sellValue.replace("\xa0", "")
     sellValue = sellValue.replace(",", ".")
 
     time = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now());
+    print(name + " " + buyValue +  " " + sellValue)
     return [name, buyValue, sellValue]
     # return [name, time, value]
 
