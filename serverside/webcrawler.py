@@ -62,7 +62,6 @@ def fetchData(corp):
     sellValue = sellValue.replace("-","0")
 
     time = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now());
-    print(name + " " + buyValue +  " " + sellValue)
     return [name, buyValue, sellValue]
     # return [name, time, value]
 
@@ -81,11 +80,9 @@ def storeData(data): # Fix SQL shit l8r
             
         
     for x in data:
-        print(x)
         conn = False
         #sql = "INSERT INTO " + x[0] + " (time,value) VALUES (CURRENT_TIMESTAMP()," + x[2] +")"
         sql = "INSERT INTO " + x[0] + " (time,buy,sell) VALUES (CURRENT_TIMESTAMP()," + x[1] +"," + x[2] +  ");"
-        print(sql)
         cursor.execute(sql)
         del sql
         db.commit() # Needs try-except-catch
@@ -96,7 +93,6 @@ def planner():
     length = len(corpList)
     cycle = math.ceil(length/60) + 1 # Round to nearest upper minute
     cycle = cycle*60/length # So we split each download to a cycle, fetches per minute
-    cycle = 0
 #    end = datetime.time(17, 30, 00)
     end = datetime.time(23, 50, 00)
     start = datetime.time(9,00,00)
