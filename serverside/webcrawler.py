@@ -64,7 +64,7 @@ def fetchData(corp):
 def storeData(data): # Fix SQL shit l8r
     conn = False
     while (conn == False):
-            db = pymysql.connect(host='localhost',port=3306,user='root', passwd=passwd, db='stockmod')
+        db = pymysql.connect(host='localhost',port=3306,user='root', passwd=passwd, db='stockmod')
         try:
             db = pymysql.connect(host='localhost',port=3306,user='root', passwd=passwd, db='stockmod')
             cursor = db.cursor()
