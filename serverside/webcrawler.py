@@ -93,8 +93,7 @@ def planner():
     length = len(corpList)
     cycle = math.ceil(length/60) + 1 # Round to nearest upper minute
     cycle = cycle*60/length # So we split each download to a cycle, fetches per minute
-#    end = datetime.time(17, 30, 00)
-    end = datetime.time(23, 50, 00)
+    end = datetime.time(17, 30, 00)
     start = datetime.time(9,00,00)
     while True:
         mydate = datetime.datetime.today()
