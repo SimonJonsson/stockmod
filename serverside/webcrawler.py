@@ -83,7 +83,7 @@ def storeData(data): # Fix SQL shit l8r
         print(sql)
         cursor.execute(sql)
         db.commit() # Needs try-except-catch
-        db.close()
+    db.close()
        
 # To reinforce that each link is fetched over a period T of time
 def planner():
