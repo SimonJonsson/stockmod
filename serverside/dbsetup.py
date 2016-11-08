@@ -16,7 +16,7 @@ passwd = input("Password: ")
 os.system('cls' if os.name == 'nt' else 'clear')
 print("\rStockmod setup")
 
-db = pymysql.connect(host='95.80.53.172',port=3306,user='Schill', passwd=passwd, db='stockmod')
+db = pymysql.connect(host='95.80.53.172',port=3306,user='root', passwd=passwd, db='stockmod')
 cursor = db.cursor()
 
 corpList = [] # Should be kept global so we don't get alot of calls, saves memory
@@ -43,8 +43,11 @@ def fetchData(corp):
 
 def main():
     for corp in corpList:
+        print("fetching")
         name = fetchData(corp)
-        sql = "CREATE TABLE " + name + " (time datetime, value double);"
+        print("fetched")
+        #sql = "CREATE TABLE " + name + " (time datetime, value double);"
+        sql = "CREATE TABLE" + name + " (time datetime, buy double, sell double);"
         print(sql)
         cursor.execute(sql)
     db.close()
