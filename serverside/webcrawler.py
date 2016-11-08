@@ -48,11 +48,13 @@ def fetchData(corp):
     # value = soup.find('span', {'class':'pushBox'}).text
     buyValue = soup.find('span', {'class':'buyPrice'}).text
     buyValue = buyValue.strip()
+    buyValue = buyValue.replace("\xe4", "")
     buyValue = buyValue.replace("\xa0", "")
     buyValue = buyValue.replace(",", ".")
     buyValue = buyValue.replace("-","0")
     sellValue = soup.find('span', {'class':'sellPrice'}).text
     sellValue = sellValue.strip()
+    sellValue = sellValue.replace("\xe4", "")
     sellValue = sellValue.replace("\xa0", "")
     sellValue = sellValue.replace(",", ".")
     sellValue = sellValue.replace("-","0")
@@ -92,6 +94,7 @@ def planner():
     length = len(corpList)
     cycle = math.ceil(length/60) + 1 # Round to nearest upper minute
     cycle = cycle*60/length # So we split each download to a cycle, fetches per minute
+    cycle = 0
 #    end = datetime.time(17, 30, 00)
     end = datetime.time(23, 50, 00)
     start = datetime.time(9,00,00)
