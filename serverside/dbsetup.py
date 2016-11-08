@@ -16,7 +16,7 @@ passwd = input("Password: ")
 os.system('cls' if os.name == 'nt' else 'clear')
 print("\rStockmod setup")
 
-db = pymysql.connect(host='95.80.53.172',port=3306,user='root', passwd=passwd, db='stockmod')
+db = pymysql.connect(host='localhost',port=3306,user='root', passwd=passwd, db='stockmod')
 cursor = db.cursor()
 
 corpList = [] # Should be kept global so we don't get alot of calls, saves memory
