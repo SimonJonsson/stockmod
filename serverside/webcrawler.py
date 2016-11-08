@@ -55,9 +55,9 @@ def fetchData(corp):
     sellValue = sellValue.replace("\xa0", "")
     sellValue = sellValue.replace(",", "")
 
-    value = value.strip()
-    value = value.replace("\xa0", "") # Avanza uses \xa0 as space
-    value = value.replace(",",".")
+#    value = value.strip()
+#   value = value.replace("\xa0", "") # Avanza uses \xa0 as space
+ #   value = value.replace(",",".")
     time = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now());
     return [name, buyValue, sellValue]
     # return [name, time, value]
