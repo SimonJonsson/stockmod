@@ -46,16 +46,13 @@ def fetchData(corp):
     name = name.replace(".","")
     name = name.replace("&","")
     # value = soup.find('span', {'class':'pushBox'}).text
-    buyValue = soup.find('span', {'class':'buyPrice SText bold'})
+    buyValue = soup.find('span', {'class':'buyPrice'})
     buyValue = buyValue.replace("\xa0", "")
     buyValue = buyValue.replace(",", "")
-    sellValue = soup.find('span', {'class':'sellPrice SText bold'})
+    sellValue = soup.find('span', {'class':'sellPrice'})
     sellValue = sellValue.replace("\xa0", "")
     sellValue = sellValue.replace(",", "")
 
-#    value = value.strip()
-#   value = value.replace("\xa0", "") # Avanza uses \xa0 as space
- #   value = value.replace(",",".")
     time = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now());
     return [name, buyValue, sellValue]
     # return [name, time, value]
