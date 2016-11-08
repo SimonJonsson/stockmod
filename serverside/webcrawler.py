@@ -16,8 +16,8 @@ corpList = [] # Should be kept global so we don't get alot of calls, saves memor
 # Adds each html in htmls.txt as a corporation
 for line in file:
     corpList.append(line)
-#passwd = input("Password: ")
-#os.system('cls' if os.name == 'nt' else 'clear')
+passwd = input("Password: ")
+os.system('cls' if os.name == 'nt' else 'clear')
 print("Stockmod")
 file.close()
 
@@ -45,29 +45,29 @@ def fetchData(corp):
     name = name.replace(" ","")
     name = name.replace(".","")
     name = name.replace("&","")
-    value = soup.find('span', {'class':'pushBox'}).text
-    # buyValue = soup.find('span', {'class':'buyPrice SText bold})
-    # buyValue = buyValue.strip()
-    # buyValue = buyValue.replace("\xa0", "")
-    # buyValue = buyValue.replace(",", "")
-    # sellValue = soup.find('span', {'class':'sellPrice SText bold})
-    # sellValue = sellValue.strip()
-    # sellValue = sellValue.replace("\xa0", "")
-    # sellValue = sellValue.replace(",", "")
+    # value = soup.find('span', {'class':'pushBox'}).text
+    buyValue = soup.find('span', {'class':'buyPrice SText bold'})
+    buyValue = buyValue.strip()
+    buyValue = buyValue.replace("\xa0", "")
+    buyValue = buyValue.replace(",", "")
+    sellValue = soup.find('span', {'class':'sellPrice SText bold')
+    sellValue = sellValue.strip()
+    sellValue = sellValue.replace("\xa0", "")
+    sellValue = sellValue.replace(",", "")
 
     value = value.strip()
     value = value.replace("\xa0", "") # Avanza uses \xa0 as space
     value = value.replace(",",".")
     time = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now());
-    # return [name, buyValue, sellValue]
-    return [name, time, value]
+    return [name, buyValue, sellValue]
+    # return [name, time, value]
 
 # Stores stock price, name and timestamp in db
 def storeData(data): # Fix SQL shit l8r
     conn = False
     while (conn == False):
         try:
-            db = pymysql.connect(host='95.80.53.172',port=3306,user='Schill', passwd='Hemligt123', db='stockmod')
+            db = pymysql.connect(host='localhost',port=3306,user='root', passwd=passwd, db='stockmod')
             cursor = db.cursor()
             conn = True
         except:
@@ -80,8 +80,8 @@ def storeData(data): # Fix SQL shit l8r
         conn = False
         while (conn == False):
             try:
-                sql = "INSERT INTO " + x[0] + " (time,value) VALUES (CURRENT_TIMESTAMP()," + x[2] +")"
-                #sql = "INSERT INTO " + x[0] + " (time,buy,sell) VALUES (CURRENT_TIMESTAMP()," + x[1] +"," + x[2] +  ")"
+                #sql = "INSERT INTO " + x[0] + " (time,value) VALUES (CURRENT_TIMESTAMP()," + x[2] +")"
+                sql = "INSERT INTO " + x[0] + " (time,buy,sell) VALUES (CURRENT_TIMESTAMP()," + x[1] +"," + x[2] +  ")"
                 cursor.execute(sql)
                 db.commit() # Needs try-except-catch
                 db.close()
@@ -97,7 +97,7 @@ def planner():
     cycle = math.ceil(length/60) + 1 # Round to nearest upper minute
     cycle = cycle*60/length # So we split each download to a cycle, fetches per minute
 #    end = datetime.time(17, 30, 00)
-    end = datetime.time(20, 30, 00)
+    end = datetime.time(23, 50, 00)
     start = datetime.time(9,00,00)
     while True:
         mydate = datetime.datetime.today()
