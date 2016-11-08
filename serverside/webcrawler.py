@@ -106,7 +106,8 @@ def planner():
                 data = fetchData(corp)
                 temp.append(data)
                 sleep(cycle)
-                storeData(temp)
+
+            storeData(temp)
             del temp # Release memory, prevent leakage
         else:
             while not (start < now and now < end): # Lowers CPU usage at closed hours
