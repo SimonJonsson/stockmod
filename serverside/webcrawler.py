@@ -63,14 +63,14 @@ def fetchData(corp):
 
     time = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now());
     return [name, buyValue, sellValue]
-    # return [name, time, value]
+
 
 # Stores stock price, name and timestamp in db
-def storeData(data): # Fix SQL shit l8r
+def storeData(data):
     conn = False
     while (conn == False):
         try:
-            db = pymysql.connect(host='localhost',port=3306,user='root', passwd=passwd, db='stockmod')
+            db = pymysql.connect(host='192.168.0.100',port=3306,user='root', passwd=passwd, db='stockmod')
             cursor = db.cursor()
             conn = True
         except:
@@ -78,7 +78,7 @@ def storeData(data): # Fix SQL shit l8r
             print("No connection to database. Trying to reconnect in 10 seconds.")
             sleep(10)
             
-        
+    # It is likely that if we can connect properly to db that we can input queries without a problem, thus no need to check
     for x in data:
         conn = False
         #sql = "INSERT INTO " + x[0] + " (time,value) VALUES (CURRENT_TIMESTAMP()," + x[2] +")"
