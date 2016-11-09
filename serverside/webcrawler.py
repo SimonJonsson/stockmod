@@ -70,7 +70,7 @@ def storeData(data):
     conn = False
     while (conn == False):
         try:
-            db = pymysql.connect(host='192.168.0.100',port=3306,user='root', passwd=passwd, db='stockmod')
+            db = pymysql.connect(host='95.80.53.172',port=3306,user='stockmod', passwd=passwd, db='stockmod')
             cursor = db.cursor()
             conn = True
         except:
@@ -93,7 +93,8 @@ def planner():
     length = len(corpList)
     cycle = math.ceil(length/60) + 1 # Round to nearest upper minute
     cycle = cycle*60/length # So we split each download to a cycle, fetches per minute
-    end = datetime.time(17, 30, 00)
+#    end = datetime.time(17, 30, 00)
+    end = datetime.time(19, 30, 00)
     start = datetime.time(9,00,00)
     while True:
         mydate = datetime.datetime.today()
@@ -105,7 +106,7 @@ def planner():
             for corp in corpList:
                 data = fetchData(corp)
                 temp.append(data)
-                sleep(cycle)
+                #sleep(cycle)
 
             storeData(temp)
             del temp # Release memory, prevent leakage
