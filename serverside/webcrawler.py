@@ -30,34 +30,27 @@ def fetchData(corp):
         try:
             response = urllib2.urlopen(corp)
             html = response.read()
+            html = html.decode('utf-8') #So we can handle it as string
+            response.close()
             conn = True
         except: 
             conn = False
             print("No connection to website. Trying to reconnect in 10 seconds.")
             sleep(10)
-
-    html = html.decode('utf-8') #So we can handle it as string
-    response.close()
-    soup = BS(html,'lxml')
-
+   
+    soup = BS(html,'lxml',from_encoding='utf-8')
     name = soup.find('div', {'class':'displayName'}).text
-    name = name.replace("\r\n\t\t\t","")
     name = name.replace(" ","")
     name = name.replace(".","")
     name = name.replace("&","")
-    name = name.replace("\xe4","")
-    name = name.replace("\xf6","")
+    name = name.strip()
     # value = soup.find('span', {'class':'pushBox'}).text
     buyValue = soup.find('span', {'class':'buyPrice'}).text
     buyValue = buyValue.strip()
-    buyValue = buyValue.replace("\xe4", "")
-    buyValue = buyValue.replace("\xa0", "")
     buyValue = buyValue.replace(",", ".")
     buyValue = buyValue.replace("-","0")
     sellValue = soup.find('span', {'class':'sellPrice'}).text
     sellValue = sellValue.strip()
-    sellValue = sellValue.replace("\xe4", "")
-    sellValue = sellValue.replace("\xa0", "")
     sellValue = sellValue.replace(",", ".")
     sellValue = sellValue.replace("-","0")
 
@@ -81,7 +74,6 @@ def storeData(data):
     # It is likely that if we can connect properly to db that we can input queries without a problem, thus no need to check
     for x in data:
         conn = False
-        #sql = "INSERT INTO " + x[0] + " (time,value) VALUES (CURRENT_TIMESTAMP()," + x[2] +")"
         sql = "INSERT INTO " + x[0] + " (time,buy,sell) VALUES (CURRENT_TIMESTAMP()," + x[1] +"," + x[2] +  ");"
         cursor.execute(sql)
         del sql
@@ -93,8 +85,7 @@ def planner():
     length = len(corpList)
     cycle = math.ceil(length/60) + 1 # Round to nearest upper minute
     cycle = cycle*60/length # So we split each download to a cycle, fetches per minute
-#    end = datetime.time(17, 30, 00)
-    end = datetime.time(19, 30, 00)
+    end = datetime.time(17, 30, 00)
     start = datetime.time(9,00,00)
     while True:
         mydate = datetime.datetime.today()
@@ -106,7 +97,7 @@ def planner():
             for corp in corpList:
                 data = fetchData(corp)
                 temp.append(data)
-                #sleep(cycle)
+                sleep(cycle)
 
             storeData(temp)
             del temp # Release memory, prevent leakage
