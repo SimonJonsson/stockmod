@@ -32,7 +32,7 @@ def fetchData(corp):
     html = response.read()
     html = html.decode('utf-8') #So we can handle it as string
     response.close()
-    soup = BS(html,'lxml',from_encoding='utf-8')
+    soup = BS(html,'lxml')
 
     name = soup.find('div', {'class':'displayName'}).text
     name = name.strip()
@@ -44,7 +44,7 @@ def fetchData(corp):
 def main():
     for corp in corpList:
         name = fetchData(corp)
-        sql = "CREATE TABLE" + name + " (time datetime, buy double, sell double);"
+        sql = "CREATE TABLE " + name + " (time datetime, buy double, sell double);"
         print(sql)
         cursor.execute(sql)
     db.close()

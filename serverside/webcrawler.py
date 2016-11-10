@@ -21,6 +21,12 @@ os.system('cls' if os.name == 'nt' else 'clear')
 print("Stockmod")
 file.close()
 
+def log(text):
+    file = open("log.txt", "a")
+    file.write(text)
+    file.close()
+
+
 def fetchData(corp):
     # Reads html and fetches corp name and stock price
     # Will later be used to put into SQL DB
@@ -38,7 +44,7 @@ def fetchData(corp):
             print("No connection to website. Trying to reconnect in 10 seconds.")
             sleep(10)
    
-    soup = BS(html,'lxml',from_encoding='utf-8')
+    soup = BS(html,'lxml')
     name = soup.find('div', {'class':'displayName'}).text
     name = name.replace(" ","")
     name = name.replace(".","")
