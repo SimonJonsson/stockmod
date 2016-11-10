@@ -11,7 +11,9 @@ except ImportError:
     import urllib2
 
 file = open('../htmls.txt','r')
-
+passFile = open('passwd','r')
+passwd = passFile.read()
+print(passwd.replace("\n",""))
 corpList = [] # Should be kept global so we don't get alot of calls, saves memory
 # Adds each html in htmls.txt as a corporation
 for line in file:
