@@ -32,7 +32,7 @@ def fetchData(corp):
     html = response.read()
     html = html.decode('utf-8') #So we can handle it as string
     response.close()
-    soup = BS(html,'lxml')
+    soup = BS(html,'lxml',from_encoding='utf-8')
 
     name = soup.find('div', {'class':'displayName'}).text
     name = name.strip()
