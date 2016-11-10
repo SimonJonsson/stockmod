@@ -16,9 +16,6 @@ corpList = [] # Should be kept global so we don't get alot of calls, saves memor
 # Adds each html in htmls.txt as a corporation
 for line in file:
     corpList.append(line)
-passwd = input("Password: ")
-os.system('cls' if os.name == 'nt' else 'clear')
-print("Stockmod")
 file.close()
 
 def log(text):
@@ -42,7 +39,7 @@ def fetchData(corp):
             conn = True
         except: 
             conn = False
-            print("No connection to website. Trying to reconnect in 10 seconds.")
+            log("No connection to website. Trying to reconnect in 10 seconds.")
             sleep(10)
    
     soup = BS(html,'lxml')
@@ -70,12 +67,12 @@ def storeData(data):
     conn = False
     while (conn == False):
         try:
-            db = pymysql.connect(host='95.80.53.172',port=3306,user='stockmod', passwd=passwd, db='stockmod')
+            db = pymysql.connect(host='95.80.53.172',port=3306,user='stockmod', passwd='stockmod', db='stockmod')
             cursor = db.cursor()
             conn = True
         except:
             conn = False
-            print("No connection to database. Trying to reconnect in 10 seconds.")
+            log("No connection to database. Trying to reconnect in 10 seconds.")
             sleep(10)
             
     # It is likely that if we can connect properly to db that we can input queries without a problem, thus no need to check
