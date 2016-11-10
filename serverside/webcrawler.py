@@ -20,6 +20,7 @@ for line in file:
     corpList.append(line)
 file.close()
 
+
 def log(text):
     mydate = datetime.datetime.today()
     now = datetime.time(mydate.hour,mydate.minute,mydate.second)
@@ -116,6 +117,7 @@ def planner():
                 now = datetime.time(mydate.hour,mydate.minute,mydate.second)
 
 def main():
+    log("Started")
     planner()
 
 if __name__ == "__main__":
