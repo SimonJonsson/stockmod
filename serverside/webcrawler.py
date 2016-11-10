@@ -25,7 +25,7 @@ def log(text):
     mydate = datetime.datetime.today()
     now = datetime.time(mydate.hour,mydate.minute,mydate.second)
     file = open("log.txt", "a")
-    file.write(str(now) + ": " + text)
+    file.write(str(now) + ": " + text + "\n")
     file.close()
 
 def fetchData(corp):
