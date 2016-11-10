@@ -39,8 +39,6 @@ def fetchData(corp):
     name = name.replace(" ","")
     name = name.replace(".","")
     name = name.replace("&","")
-    name = name.replace("\xe4","ä")
-    name = name.replace("\xf6","ö")
     return name
 
 def main():
