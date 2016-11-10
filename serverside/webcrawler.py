@@ -22,10 +22,11 @@ print("Stockmod")
 file.close()
 
 def log(text):
+    mydate = datetime.datetime.today()
+    now = datetime.time(mydate.hour,mydate.minute,mydate.second)
     file = open("log.txt", "a")
-    file.write(text)
+    file.write(str(now) + ": " + text)
     file.close()
-
 
 def fetchData(corp):
     # Reads html and fetches corp name and stock price
@@ -55,10 +56,12 @@ def fetchData(corp):
     buyValue = buyValue.strip()
     buyValue = buyValue.replace(",", ".")
     buyValue = buyValue.replace("-","0")
+    buyValue = buyValue.replace(" ","")
     sellValue = soup.find('span', {'class':'sellPrice'}).text
     sellValue = sellValue.strip()
     sellValue = sellValue.replace(",", ".")
     sellValue = sellValue.replace("-","0")
+    sellValue = sellValue.replace(" ","")
 
     time = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now());
     return [name, buyValue, sellValue]
@@ -81,6 +84,7 @@ def storeData(data):
     for x in data:
         conn = False
         sql = "INSERT INTO " + x[0] + " (time,buy,sell) VALUES (CURRENT_TIMESTAMP()," + x[1] +"," + x[2] +  ");"
+        log(sql)
         cursor.execute(sql)
         del sql
         db.commit() # Needs try-except-catch
