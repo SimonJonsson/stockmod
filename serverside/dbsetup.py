@@ -11,7 +11,9 @@ except ImportError:
     
 
 file = open('../htmls.txt','r')
-passwd = input("Password: ")
+passFile = open('passwd','r')
+passwd = passFile.read()
+passwd = passwd.replace("\n","")
 os.system('cls' if os.name == 'nt' else 'clear')
 print("\rStockmod setup")
 
