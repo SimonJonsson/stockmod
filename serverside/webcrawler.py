@@ -22,8 +22,8 @@ file.close()
 
 
 def log(text):
-    mydate = datetime.datetime.today()
-    now = datetime.time(mydate.hour,mydate.minute,mydate.second)
+    now = datetime.datetime.now()
+    now = now.strftime('%Y/%m/%d %H:%M:%S')
     file = open("log.txt", "a")
     file.write(str(now) + ": " + text + "\n")
     file.close()
