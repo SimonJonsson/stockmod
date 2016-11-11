@@ -82,7 +82,6 @@ def storeData(data):
     for x in data:
         conn = False
         sql = "INSERT INTO " + x[0] + " (time,buy,sell) VALUES (CURRENT_TIMESTAMP()," + x[1] +"," + x[2] +  ");"
-        log(sql)
         cursor.execute(sql)
         del sql
         db.commit() # Needs try-except-catch
