@@ -47,8 +47,12 @@ def main():
     for corp in corpList:
         name = fetchData(corp)
         sql = "CREATE TABLE " + name + " (time datetime, buy double, sell double);"
-        print(sql)
-        cursor.execute(sql)
+        try:
+            cursor.execute(sql)
+        except:
+            print(name + " already exists")
+        else:
+            print(name + " created")
     db.close()
 
 if __name__ == "__main__":
