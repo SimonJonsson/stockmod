@@ -44,22 +44,27 @@ def fetchData(corp):
             conn = False
             log("No connection to website. Trying to reconnect in 10 seconds.")
             sleep(10)
-   
-    soup = BS(html,'lxml')
-    name = soup.find('div', {'class':'displayName'}).text
-    name = name.replace(" ","")
-    name = name.replace(".","")
-    name = name.replace("&","")
-    name = name.strip()
-    # value = soup.find('span', {'class':'pushBox'}).text
-    buyValue = soup.find('span', {'class':'buyPrice'}).text
-    buyValue = buyValue.replace(",", ".")
-    buyValue = buyValue.replace("-","0")
-    buyValue = buyValue.replace("\xa0","")
-    sellValue = soup.find('span', {'class':'sellPrice'}).text
-    sellValue = sellValue.replace(",", ".")
-    sellValue = sellValue.replace("-","0")
-    sellValue = sellValue.replace("\xa0","")
+    try:
+        soup = BS(html,'lxml')
+        name = soup.find('div', {'class':'displayName'}).text
+        name = name.replace(" ","")
+        name = name.replace(".","")
+        name = name.replace("&","")
+        name = name.strip()
+        buyValue = soup.find('span', {'class':'buyPrice'}).text
+        buyValue = buyValue.replace(",", ".")
+        buyValue = buyValue.replace("-","0")
+        buyValue = buyValue.replace("\xa0","")
+        sellValue = soup.find('span', {'class':'sellPrice'}).text
+        sellValue = sellValue.replace(",", ".")
+        sellValue = sellValue.replace("-","0")
+        sellValue = sellValue.replace("\xa0","")
+    except AttributeError:
+        log("Attribute error, remove: " + corp)
+        return None
+    except:
+        print("Unexpected error:", sys.exc_info())
+
 
     time = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now());
     return [name, buyValue, sellValue]
@@ -77,7 +82,7 @@ def storeData(data):
             conn = False
             log("No connection to database. Trying to reconnect in 10 seconds.")
             sleep(10)
-            
+
     # It is likely that if we can connect properly to db that we can input queries without a problem, thus no need to check
     for x in data:
         conn = False
@@ -86,7 +91,7 @@ def storeData(data):
         del sql
         db.commit() # Needs try-except-catch
     db.close()
-       
+
 # To reinforce that each link is fetched over a period T of time
 def planner():
     length = len(corpList)
@@ -103,8 +108,9 @@ def planner():
 
             for corp in corpList:
                 data = fetchData(corp)
-                temp.append(data)
-                sleep(cycle)
+                if data != None:
+                    temp.append(data)
+                    sleep(cycle)
 
             storeData(temp)
             del temp # Release memory, prevent leakage
